@@ -1,65 +1,99 @@
-import AuthService from '~/services/AuthService.js'
 import axios from 'axios'
 const Cookie = require('js-cookie');
 
 export const state = () => ({
-  user: null,
+  authUser: null,
   
 })
 
 export const mutations = {
-  SET_USER(state, user) {
-    state.user = user
-  }
+    SET_USER(state, user) {
+      state.authUser = user
+    }
 }
 
 export const actions = {
-
-  async me({ commit }, { config }) {
-    console.log('------------- user me');
-    const response = await AuthService.me({ config })
-    console.log('---', response.data);
-    if (response.data.status === 200) {
-      Cookie.set('session', user.session.sessionKey)
-    } else {
-      Cookie.remove('session')
-    }
-    commit('SET_USER', response.data.user)
+  async login ({ commit }, { username, password }) {
+    return fetch('/api/auth/login', {
+      // Send the client cookies to the server
+      credentials: 'same-origin',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username,
+        password
+      })
+    })
+    .then((res) => {
+      if (res.status === 401) {
+        throw new Error('Bad credentials')
+      } else {
+        return res.json()
+      }
+    })
+    .then((authUser) => {
+      commit('SET_USER', authUser)
+    })
   },
-  async login({ commit }, { email, password }) {
-    const response = await AuthService.login({ email, password })
-    if (response.data.status == 200) {
-      commit('SET_USER', response.data.user)
-      Cookie.set('session', response.data.session.sessionKey)
-    } else {
-      throw response.data
-    }
-    console.log('-----data', response.data);
-    
+  async register({commit}, { username, password}) {
+    return axios({
+      url: '/api/auth/register',
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: JSON.stringify({
+        username,
+        password
+      })
+    })
+    .then((res) => {
+      if (res.status === 200) {
+        return res.data
+      } else {
+        throw new Error('Bad credentials')
+      }
+    })
   },
-  async register({ commit }, form) {
-    const response = await AuthService.register(form)
-    console.log('---------- register response', response);
-    const data = response.data
-    if (data.status != 201){
-      console.log('nnnn');
-      throw data
-    }
-  },
-
-  async logout({ commit }) {
-    const config = {}
-    config.sessionId = Cookie.get('session')
-    console.log('session----', config);
-    const response = await AuthService.logout(config)
-    console.log('------', response);
-    if (response.data.status === 204) {
+  
+  // async login ({ commit }, { username, password }) {
+  //   console.log('----', username, password);
+  //   return axios({
+  //     // Send the client cookies to the server
+  //     url: '/api/auth/login', 
+  //     credentials: 'same-origin',
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     data: JSON.stringify({
+  //       username,
+  //       password
+  //     })
+  //   })
+  //   .then((res) => {
+  //     console.log('0---', res);
+  //     if (res.status === 401) {
+  //       throw new Error('Bad credentials')
+  //     } else {
+  //       return res
+  //     }
+  //   })
+  //   .then((res) => {
+  //     console.log(res);
+  //     commit('SET_USER', res.data)
+  //   })
+  // },
+  async logout ({ commit }) {
+    return axios({url: '/api/auth/logout', 
+      // Send the client cookies to the server
+      credentials: 'same-origin',
+      method: 'POST'
+    })
+    .then(() => {
       commit('SET_USER', null)
-      Cookie.remove('session')
-      console.log('logout --------', response.data);
-      return response.data
-    } else {
-      throw response.data
-    }
+    })
   }
 }

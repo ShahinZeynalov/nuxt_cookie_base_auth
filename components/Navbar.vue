@@ -13,10 +13,10 @@
             
             <!-- Right aligned nav items -->
             <b-navbar-nav class="ml-auto">
-                <b-nav-item v-if='!this.$store.state.auth.user' to='/login'>Login</b-nav-item>
-                <b-nav-item v-if='!this.$store.state.auth.user' to='/register'>Register</b-nav-item>
-                <b-nav-item v-if='this.$store.state.auth.user'>{{ this.$store.state.auth.user.email }}</b-nav-item>
-                <b-nav-item v-if='this.$store.state.auth.user' @click="logoutAction()" >Logout</b-nav-item>
+                <b-nav-item v-if='!this.$store.state.auth.authUser' to='/login'>Login</b-nav-item>
+                <b-nav-item v-if='!this.$store.state.auth.authUser' to='/register'>Register</b-nav-item>
+                <b-nav-item  v-if='this.$store.state.auth.authUser'>{{ this.$store.state.auth.authUser.username }}</b-nav-item>
+                <b-nav-item v-if='this.$store.state.auth.authUser' @click="logoutAction()" >Logout</b-nav-item>
             </b-navbar-nav>
             </b-collapse>
         </b-navbar>
@@ -25,13 +25,15 @@
 </template>
 <script>
 
-import { mapActions, mapState, mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
     data() {
         return {
 
         }
+    },
+    computed: {
     },
     methods: {
         ...mapActions({

@@ -21,7 +21,7 @@
             <b-form-group label="Email">
               <b-input
                 ref="email"
-                v-model="formEmail"
+                v-model="formUsername"
                 placeholder="email"
               />
             </b-form-group>
@@ -51,8 +51,8 @@ export default {
   middleware: ['notAuth'],
   data() {
     return {
-      formEmail: 'user@example.com',
-      formPassword: 'string',
+      formUsername: 'shahin',
+      formPassword: 'password',
       error: null
     }
   },
@@ -88,7 +88,7 @@ export default {
     async login() {
       try {
         await this.$store.dispatch('auth/login', {
-          email: this.formEmail,
+          username: this.formUsername,
           password: this.formPassword
         })
         this.formUsername = ''
@@ -100,6 +100,25 @@ export default {
         this.error = e.message
       }
     },
+
+    // login() {
+    //   return this.$auth
+    //     .loginWith('local', {
+    //       data: {
+    //         username: this.username,
+    //         password: this.password
+    //       },
+    //       // credentials: 'same-origin',
+    //       // method: 'POST',
+    //       // headers: {
+    //       //   'Content-Type': 'application/json'
+    //       // },
+    //     })
+    //     .catch((err) => {
+    //       console.error(err)
+    //       this.error = err.response?.data
+    //     });
+    // },
   }
 }
 </script>

@@ -11,6 +11,18 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
+  proxy: {
+    '/api': 'http://localhost:3000',
+    },
+  axios: {
+    baseURL: "http://localhost:3000",
+    // credentials: true,
+    // headers: {
+    //   'Content-Type': 'application/json',
+    //   'accept': "application/json"
+    // },
+  
+  },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
@@ -32,9 +44,34 @@ export default {
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
     'bootstrap-vue/nuxt',
+    '@nuxtjs/axios', // add this
+    // '@nuxtjs/auth-next',
   ],
-
+  serverMiddleware: ['~/api/index'],
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
-  }
+  },
+  // auth: {
+  //   strategies: {
+  //     local: {
+  //       token: {
+  //         required: false,
+  //         type: false
+  //       },
+  //       endpoints: {
+  //         login: {
+  //           url: '/api/auth/login/',
+  //           method: 'POST',
+  //           credentials: true,
+  //           headers: {
+  //             'Content-Type': 'application/json',
+  //             'accept': "application/json"
+  //           },
+          
+  //         },
+  //         logout: { url: '/api/auth/logout/', method: 'post' },
+  //       },
+  //     },
+  //   },
+  // },
 }

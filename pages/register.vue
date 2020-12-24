@@ -15,11 +15,11 @@
         <b-card bg-variant="light">
           <!-- <busy-overlay /> -->
           <form @keydown.enter="login">
-            <b-form-group label="Email">
+            <b-form-group label="username">
               <b-input
-                ref="email"
-                v-model="formEmail"
-                placeholder="email"
+                ref="username"
+                v-model="formUsername"
+                placeholder="username"
               />
             </b-form-group>
 
@@ -45,13 +45,11 @@
 </template>
 
 <script>
-import { mapActions, mapState, mapGetters } from 'vuex'
-
 export default {
   middleware: ['notAuth'],
   data() {
     return {
-      formEmail: 'user@example.com',
+      formUsername: 'username',
       formPassword: 'string',
       error: null
     }
@@ -77,12 +75,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions({
-    }),
+
     async register() {
       try {
         await this.$store.dispatch('auth/register', {
-          email: this.formEmail,
+          username: this.formUsername,
           password: this.formPassword
         })
         this.formUsername = ''
