@@ -58,7 +58,7 @@ export default {
   },
   computed: {
     ...mapState({
-      authData: state => state.auth.authUser
+      // authData: state => state.auth.authUser
     }),
     redirect() {
       return (
@@ -85,40 +85,40 @@ export default {
     }
   },
   methods: {
-    async login() {
-      try {
-        await this.$store.dispatch('auth/login', {
-          username: this.formUsername,
-          password: this.formPassword
-        })
-        this.formUsername = ''
-        this.formPassword = ''
-        this.error = null
-        this.$router.push('/')
-      } catch (e) {
-        console.log('login error', e.message);
-        this.error = e.message
-      }
-    },
-
-    // login() {
-    //   return this.$auth
-    //     .loginWith('local', {
-    //       data: {
-    //         username: this.username,
-    //         password: this.password
-    //       },
-    //       // credentials: 'same-origin',
-    //       // method: 'POST',
-    //       // headers: {
-    //       //   'Content-Type': 'application/json'
-    //       // },
+    // async login() {
+    //   try {
+    //     await this.$store.dispatch('auth/login', {
+    //       username: this.formUsername,
+    //       password: this.formPassword
     //     })
-    //     .catch((err) => {
-    //       console.error(err)
-    //       this.error = err.response?.data
-    //     });
+    //     this.formUsername = ''
+    //     this.formPassword = ''
+    //     this.error = null
+    //     this.$router.push('/')
+    //   } catch (e) {
+    //     console.log('login error', e.message);
+    //     this.error = e.message
+    //   }
     // },
+
+    login() {
+      return this.$auth
+        .loginWith('local', {
+          data: {
+            username: this.username,
+            password: this.password
+          },
+          // credentials: 'same-origin',
+          // method: 'POST',
+          // headers: {
+          //   'Content-Type': 'application/json'
+          // },
+        })
+        .catch((err) => {
+          console.error(err)
+          this.error = err.response?.data
+        });
+    },
   }
 }
 </script>

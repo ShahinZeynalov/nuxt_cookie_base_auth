@@ -54,7 +54,7 @@ app.post('/auth/login', (req, res) => {
     req.session.authUser = { username: user.username }
     return res.status(200).json({ username: user.username })
   }
-  console.log(res);
+  // console.log(res);
   res.status(401).json({ message: 'Bad credentials' })
 })
 

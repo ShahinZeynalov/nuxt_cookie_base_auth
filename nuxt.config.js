@@ -45,33 +45,33 @@ export default {
   modules: [
     'bootstrap-vue/nuxt',
     '@nuxtjs/axios', // add this
-    // '@nuxtjs/auth-next',
+    '@nuxtjs/auth-next',
   ],
   serverMiddleware: ['~/api/index'],
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
   },
-  // auth: {
-  //   strategies: {
-  //     local: {
-  //       token: {
-  //         required: false,
-  //         type: false
-  //       },
-  //       endpoints: {
-  //         login: {
-  //           url: '/api/auth/login/',
-  //           method: 'POST',
-  //           credentials: true,
-  //           headers: {
-  //             'Content-Type': 'application/json',
-  //             'accept': "application/json"
-  //           },
+  auth: {
+    strategies: {
+      local: {
+        token: {
+          required: false,
+          type: false
+        },
+        endpoints: {
+          login: {
+            url: '/api/auth/login/',
+            method: 'POST',
+            credentials: true,
+            headers: {
+              'Content-Type': 'application/json',
+              'accept': "application/json"
+            },
           
-  //         },
-  //         logout: { url: '/api/auth/logout/', method: 'post' },
-  //       },
-  //     },
-  //   },
-  // },
+          },
+          logout: { url: '/api/auth/logout/', method: 'post' },
+        },
+      },
+    },
+  },
 }
