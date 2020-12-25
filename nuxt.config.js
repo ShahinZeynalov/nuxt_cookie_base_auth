@@ -14,15 +14,15 @@ export default {
   proxy: {
     '/api': 'http://localhost:3000',
     },
-  axios: {
-    baseURL: "http://localhost:3000",
-    // credentials: true,
-    // headers: {
-    //   'Content-Type': 'application/json',
-    //   'accept': "application/json"
-    // },
+  // axios: {
+  //   baseURL: "http://localhost:3000",
+  //   // credentials: true,
+  //   // headers: {
+  //   //   'Content-Type': 'application/json',
+  //   //   'accept': "application/json"
+  //   // },
   
-  },
+  // },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
@@ -47,7 +47,7 @@ export default {
     '@nuxtjs/axios', // add this
     '@nuxtjs/auth-next',
   ],
-  serverMiddleware: ['~/api/index'],
+  serverMiddleware: ['~/api/index.js'],
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
   },
@@ -59,19 +59,10 @@ export default {
           type: false
         },
         endpoints: {
-          login: {
-            url: '/api/auth/login/',
-            method: 'POST',
-            credentials: true,
-            headers: {
-              'Content-Type': 'application/json',
-              'accept': "application/json"
-            },
-          
-          },
-          logout: { url: '/api/auth/logout/', method: 'post' },
-        },
-      },
-    },
-  },
+          login: { url: '/api/auth/login', method: 'post' },
+          logout: { url: '/api/auth/logout', method: 'post' },
+        }
+      }
+    }
+  }
 }

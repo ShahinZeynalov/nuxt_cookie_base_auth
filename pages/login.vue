@@ -87,7 +87,7 @@ export default {
   methods: {
     // async login() {
     //   try {
-    //     await this.$store.dispatch('auth/login', {
+    //     await this.$store.dispatch('authen/login', {
     //       username: this.formUsername,
     //       password: this.formPassword
     //     })
@@ -104,15 +104,14 @@ export default {
     login() {
       return this.$auth
         .loginWith('local', {
-          data: {
-            username: this.username,
-            password: this.password
+          credentials: 'same-orogin',
+          headers: {
+            'Content-Type': 'application/json'
           },
-          // credentials: 'same-origin',
-          // method: 'POST',
-          // headers: {
-          //   'Content-Type': 'application/json'
-          // },
+          data: {
+            username: this.formUsername,
+            password: this.formPassword
+          },
         })
         .catch((err) => {
           console.error(err)

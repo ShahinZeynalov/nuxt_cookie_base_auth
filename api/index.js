@@ -17,11 +17,10 @@ app.use(session({
   secret: 'secret key',
   resave: true,
   saveUninitialized: false,
-  // cookie: { maxAge: 60000 },
   cookie: {
     maxAge: 60000,
     httpOnly: true,
-    sameSite: false,
+    sameSite: true,
     path: '/'
   },
   }))
@@ -37,6 +36,9 @@ app.use((req, res, next) => {
 let users = []
 users.push({ username: 'shahin' , password: 'password'})
 
+app.get('/', (req, res) => {
+  res.send('okay')
+})
 app.post('/auth/login', (req, res) => {
 
   console.log('the body: ', req.body)
